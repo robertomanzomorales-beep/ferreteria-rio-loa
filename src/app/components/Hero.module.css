@@ -1,0 +1,429 @@
+.hero {
+  position: relative;
+  width: 100%;
+  height: clamp(430px, 35vw, 560px);
+  min-height: 430px;
+  overflow: hidden;
+  background: #0057bb;
+  font-family: "Made Tommy", Arial, sans-serif;
+}
+
+.slides {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    opacity 700ms ease,
+    visibility 700ms ease;
+}
+
+.slideActive {
+  z-index: 1;
+  visibility: visible;
+  opacity: 1;
+}
+
+.backgroundImage {
+  object-fit: cover;
+  transform: scale(1.04);
+  transition: transform 7s ease;
+}
+
+.slideActive .backgroundImage {
+  transform: scale(1);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 24, 68, 0.97) 0%,
+      rgba(0, 45, 111, 0.93) 29%,
+      rgba(0, 70, 154, 0.67) 50%,
+      rgba(0, 87, 187, 0.24) 72%,
+      rgba(0, 87, 187, 0.04) 100%
+    ),
+    linear-gradient(0deg, rgba(0, 25, 70, 0.35) 0%, transparent 52%);
+}
+
+.contentWrapper {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  width: min(100% - 96px, 1280px);
+  height: 100%;
+  margin: 0 auto;
+}
+
+.content {
+  width: min(100%, 630px);
+  color: #ffffff;
+  opacity: 0;
+  transform: translate3d(-72px, 0, 0);
+}
+
+.contentActive {
+  animation: contentEntrance 850ms cubic-bezier(0.16, 1, 0.3, 1) 140ms both;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 15px;
+  color: #ff7f32;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  line-height: 1.2;
+}
+
+.eyebrow::before {
+  width: 30px;
+  height: 3px;
+  content: "";
+  background: #ff7f32;
+}
+
+.title {
+  max-width: 620px;
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(2.45rem, 4vw, 4.3rem);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 0.99;
+  text-wrap: balance;
+}
+
+.description {
+  max-width: 555px;
+  margin: 21px 0 0;
+  color: rgba(255, 255, 255, 0.94);
+  font-size: clamp(0.98rem, 1.15vw, 1.1rem);
+  font-weight: 400;
+  line-height: 1.58;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.primaryButton,
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 47px;
+  padding: 0 20px;
+  border: 1px solid transparent;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.primaryButton {
+  gap: 17px;
+  color: #ffffff;
+  background: #ff7f32;
+  border-color: #ff7f32;
+}
+
+.secondaryButton {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.75);
+}
+
+.primaryButton:hover,
+.secondaryButton:hover {
+  transform: translateY(-3px);
+}
+
+.primaryButton:hover {
+  background: #ff9655;
+  border-color: #ff9655;
+}
+
+.secondaryButton:hover {
+  color: #0057bb;
+  background: #ffffff;
+  border-color: #ffffff;
+}
+
+.arrow {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: #ffffff;
+  background: rgba(0, 35, 87, 0.46);
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  border-radius: 50%;
+  cursor: pointer;
+  place-items: center;
+  transform: translateY(-50%);
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.arrow:hover {
+  background: #ff7f32;
+  border-color: #ff7f32;
+  transform: translateY(-50%) scale(1.06);
+}
+
+.arrow span {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.arrowPrevious {
+  left: 28px;
+}
+
+.arrowNext {
+  right: 28px;
+}
+
+.pagination {
+  position: absolute;
+  z-index: 3;
+  bottom: 28px;
+  left: 50%;
+  display: flex;
+  gap: 9px;
+  transform: translateX(-50%);
+}
+
+.paginationButton {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.6);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    background-color 180ms ease,
+    width 180ms ease;
+}
+
+.paginationButton:hover {
+  background: #ffffff;
+}
+
+.paginationButtonActive {
+  width: 29px;
+  background: #ff7f32;
+}
+
+@keyframes contentEntrance {
+  from {
+    opacity: 0;
+    transform: translate3d(-72px, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (max-width: 800px) {
+  .hero {
+    height: 400px;
+    min-height: 400px;
+  }
+
+  .backgroundImage {
+    transform: scale(1.01);
+  }
+
+  .slideActive .backgroundImage {
+    transform: scale(1);
+  }
+
+  .overlay {
+    background:
+      linear-gradient(
+        0deg,
+        rgba(0, 27, 74, 0.94) 0%,
+        rgba(0, 48, 116, 0.75) 45%,
+        rgba(0, 87, 187, 0.12) 100%
+      ),
+      linear-gradient(90deg, rgba(0, 30, 82, 0.46) 0%, transparent 78%);
+  }
+
+  .contentWrapper {
+    align-items: flex-end;
+    width: min(100% - 40px, 640px);
+    padding-bottom: 65px;
+  }
+
+  .content {
+    width: 100%;
+  }
+
+  .eyebrow {
+    gap: 8px;
+    margin-bottom: 9px;
+    font-size: 0.59rem;
+    letter-spacing: 0.115em;
+  }
+
+  .eyebrow::before {
+    width: 22px;
+    height: 2px;
+  }
+
+  .title {
+    max-width: 405px;
+    font-size: clamp(1.72rem, 7.8vw, 2.35rem);
+    line-height: 1.04;
+  }
+
+  .description {
+    max-width: 390px;
+    margin-top: 11px;
+    font-size: 0.8rem;
+    line-height: 1.44;
+  }
+
+  .actions {
+    gap: 9px;
+    margin-top: 17px;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    min-height: 38px;
+    padding: 0 13px;
+    font-size: 0.72rem;
+  }
+
+  .arrow {
+    top: auto;
+    bottom: 19px;
+    width: 33px;
+    height: 33px;
+    transform: none;
+  }
+
+  .arrow:hover {
+    transform: scale(1.05);
+  }
+
+  .arrow span {
+    font-size: 1.06rem;
+  }
+
+  .arrowPrevious {
+    right: 61px;
+    left: auto;
+  }
+
+  .arrowNext {
+    right: 20px;
+  }
+
+  .pagination {
+    bottom: 32px;
+    left: 20px;
+    gap: 7px;
+    transform: none;
+  }
+
+  .paginationButton {
+    width: 7px;
+    height: 7px;
+  }
+
+  .paginationButtonActive {
+    width: 22px;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero {
+    height: 380px;
+    min-height: 380px;
+  }
+
+  .contentWrapper {
+    width: min(100% - 32px, 640px);
+    padding-bottom: 61px;
+  }
+
+  .title {
+    font-size: 1.65rem;
+  }
+
+  .description {
+    font-size: 0.76rem;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    min-height: 36px;
+    padding: 0 11px;
+    font-size: 0.68rem;
+  }
+
+  .arrowNext {
+    right: 16px;
+  }
+
+  .arrowPrevious {
+    right: 55px;
+  }
+
+  .pagination {
+    left: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide,
+  .backgroundImage,
+  .content,
+  .primaryButton,
+  .secondaryButton,
+  .arrow,
+  .paginationButton {
+    transition: none;
+  }
+
+  .contentActive {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

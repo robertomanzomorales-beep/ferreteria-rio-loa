@@ -1,0 +1,706 @@
+.footer {
+  --blue: #0057b8;
+  --blue-dark: #003d82;
+  --blue-deep: #002a57;
+  --orange: #ff7f32;
+  --white: #ffffff;
+  --dark: #202a34;
+
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--white);
+}
+
+.imageSection {
+  position: relative;
+  display: grid;
+  min-height: clamp(380px, 35vw, 520px);
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.backgroundImage {
+  z-index: 0;
+  object-fit: cover;
+  object-position: center 52%;
+  filter: grayscale(1) contrast(1.06);
+  transform: scale(1.08);
+  transition:
+    transform 1800ms
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.footer[data-visible="true"] .backgroundImage {
+  transform: scale(1);
+}
+
+.imageOverlay {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(7, 15, 23, 0.67) 0%,
+      rgba(8, 18, 28, 0.62) 45%,
+      rgba(7, 17, 27, 0.87) 100%
+    );
+}
+
+.blueGlow {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 87, 184, 0.15) 0%,
+      transparent 43%,
+      rgba(255, 127, 50, 0.09) 100%
+    );
+  mix-blend-mode: screen;
+}
+
+.slogan {
+  position: relative;
+  z-index: 3;
+  width: min(920px, calc(100% - 48px));
+  margin-top: -62px;
+  text-align: center;
+  opacity: 0;
+  transform: translate3d(0, 70px, 0);
+  transition:
+    opacity 900ms 100ms ease,
+    transform 1100ms 100ms
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.footer[data-visible="true"] .slogan {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.sloganLine {
+  display: block;
+  width: 46px;
+  height: 4px;
+  margin: 0 auto 20px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transition:
+    transform 900ms 650ms
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.footer[data-visible="true"] .sloganLine {
+  transform: scaleX(1);
+}
+
+.slogan p {
+  margin: 0 0 12px;
+  color: rgba(255, 255, 255, 0.72);
+  font-family:
+    "MADE TOMMY",
+    "Montserrat",
+    Arial,
+    sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.slogan h2 {
+  max-width: 780px;
+  margin: 0 auto;
+  color: var(--white);
+  font-family:
+    "MADE TOMMY",
+    "Montserrat",
+    Arial,
+    sans-serif;
+  font-size: clamp(2.15rem, 4vw, 4.15rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+.slogan h2 span {
+  color: var(--orange);
+}
+
+.informationWrapper {
+  position: relative;
+  z-index: 5;
+  width: min(1600px, calc(100% - 72px));
+  margin: clamp(-104px, -7vw, -76px) auto 0;
+  opacity: 0;
+  transform: translate3d(0, 110px, 0);
+  transition:
+    opacity 900ms 300ms ease,
+    transform 1100ms 300ms
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.footer[data-visible="true"] .informationWrapper {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.information {
+  display: grid;
+  grid-template-columns:
+    minmax(220px, 1.02fr)
+    minmax(190px, 0.8fr)
+    minmax(270px, 1.05fr)
+    minmax(240px, 0.93fr);
+  min-height: 390px;
+  overflow: hidden;
+  background: var(--dark);
+  box-shadow: 0 34px 75px rgba(9, 20, 31, 0.22);
+}
+
+.column {
+  position: relative;
+  min-width: 0;
+  padding:
+    clamp(42px, 4vw, 66px)
+    clamp(27px, 3vw, 48px);
+}
+
+.column:not(:last-child)::after {
+  position: absolute;
+  top: 52px;
+  right: 0;
+  bottom: 52px;
+  width: 1px;
+  content: "";
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.brandColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.logoLink {
+  display: block;
+  width: min(245px, 100%);
+  margin-bottom: 25px;
+  line-height: 0;
+}
+
+.logo {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 96px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.description {
+  max-width: 310px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.67);
+  font-family:
+    "MADE TOMMY",
+    "Montserrat",
+    Arial,
+    sans-serif;
+  font-size: 0.81rem;
+  font-weight: 400;
+  line-height: 1.72;
+}
+
+.socialNetworks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 32px;
+}
+
+.socialLink {
+  display: grid;
+  width: 41px;
+  height: 41px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 50%;
+  transition:
+    background-color 250ms ease,
+    border-color 250ms ease,
+    transform 350ms
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.socialIcon {
+  width: 19px;
+  height: 19px;
+  object-fit: contain;
+  filter: invert(1);
+  mix-blend-mode: screen;
+}
+
+.socialLink:hover {
+  background: var(--orange);
+  border-color: var(--orange);
+  transform: translateY(-5px);
+}
+
+.columnHeading {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-bottom: 27px;
+}
+
+.columnHeading > span {
+  width: 21px;
+  height: 3px;
+  flex: 0 0 auto;
+  background: var(--orange);
+}
+
+.columnHeading h3 {
+  margin: 0;
+  color: var(--white);
+  font-family:
+    "MADE TOMMY",
+    "Montserrat",
+    Arial,
+    sans-serif;
+  font-size: 0.93rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.navigation {
+  display: flex;
+  flex-direction: column;
+}
+
+.navigation a {
+  display: flex;
+  align-items: center;
+  min-height: 43px;
+  color: rgba(255, 255, 255, 0.69);
+  font-family:
+    "MADE TOMMY",
+    "Montserrat",
+    Arial,
+    sans-serif;
+  font-size: 0.76rem;
+  font-weight: 400;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+  transition:
+    color 230ms ease,
+    padding-left 330ms
+    cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 230ms ease;
+}
+
+.navigation a:first-child {
+  border-top: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+.navigation a:hover {
+  padding-left: 8px;
+  color: var(--white);
+  border-color: rgba(255, 127, 50, 0.48);
+}
+
+.contactList {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+}
+
+.contactItem,
+.addressItem {
+  display: grid;
+  grid-template-columns: 39px minmax(0, 1fr);
+  align-items: start;
+  gap: 13px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.contactIcon {
+  display: grid;
+  width: 39px;
+  height: 39px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transition:
+    background-color 250ms ease,
+    border-color 250ms ease,
+    transform 330ms
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.contactIcon img {
+  width: 19px;
+  height: 19px;
+  object-fit: contain;
+  filter: invert(1);
+}
+
+.contactItem small,
+.addressItem small {
+  display: block;
+  margin-bottom: 5px;
+  color: rgba(255, 255, 255, 0.46);
+  font-family:
+    "MADE TOMMY",
+    "Montserrat",
+    Arial,
+    sans-serif;
+  font-size: 0.57rem;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.contactItem strong,
+.addressItem strong {
+  display: block;
+  overflow-wrap: anywhere;
+  color: rgba(255, 255, 255, 0.83);
+  font-family:
+    "MADE TOMMY",
+    "Montserrat",
+    Arial,
+    sans-serif;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.55;
+  transition: color 230ms ease;
+}
+
+.contactItem:hover .contactIcon,
+.addressItem:hover .contactIcon {
+  background: var(--orange);
+  border-color: var(--orange);
+  transform: translateY(-3px);
+}
+
+.contactItem:hover strong,
+.addressItem:hover strong {
+  color: var(--white);
+}
+
+.address {
+  display: flex;
+  flex-direction: column;
+  gap: 21px;
+  margin: 0;
+  font-style: normal;
+}
+
+.quoteButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  width: 100%;
+  min-height: 51px;
+  margin-top: 30px;
+  padding: 0 17px 0 20px;
+  overflow: hidden;
+  color: var(--white);
+  font-family:
+    "MADE TOMMY",
+    "Montserrat",
+    Arial,
+    sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  text-transform: uppercase;
+  background: var(--blue);
+  transition:
+    background-color 280ms ease,
+    transform 350ms
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.buttonArrow {
+  display: grid;
+  width: 27px;
+  height: 27px;
+  flex: 0 0 auto;
+  place-items: center;
+  color: var(--blue-dark);
+  font-family: Arial, sans-serif;
+  font-size: 0.82rem;
+  background: var(--white);
+  border-radius: 50%;
+  transition:
+    color 280ms ease,
+    transform 350ms
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.quoteButton:hover {
+  background: var(--orange);
+  transform: translateY(-4px);
+}
+
+.quoteButton:hover .buttonArrow {
+  color: var(--orange);
+  transform: rotate(45deg);
+}
+
+.bottomBar {
+  position: relative;
+  z-index: 4;
+  margin-top: -1px;
+  background: var(--orange);
+}
+
+.bottomContent {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 28px;
+  width: min(1400px, calc(100% - 72px));
+  min-height: 68px;
+  margin: 0 auto;
+}
+
+.bottomContent p,
+.bottomContent span,
+.vialoopCredit {
+  margin: 0;
+  font-family:
+    "MADE TOMMY",
+    "Montserrat",
+    Arial,
+    sans-serif;
+  font-size: 0.67rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.bottomContent p {
+  color: var(--white);
+}
+
+.bottomContent span {
+  color: rgba(255, 255, 255, 0.72);
+  text-align: center;
+}
+
+.vialoopCredit {
+  justify-self: end;
+  color: var(--white);
+  text-align: right;
+  text-decoration: none;
+  transition: opacity 230ms ease;
+}
+
+.vialoopCredit:hover {
+  opacity: 0.72;
+}
+
+@media (max-width: 1180px) {
+  .information {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .column {
+    min-height: 330px;
+  }
+
+  .column:nth-child(2)::after {
+    display: none;
+  }
+
+  .column:nth-child(-n + 2) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .column:not(:last-child)::after {
+    top: 42px;
+    bottom: 42px;
+  }
+
+  .socialNetworks {
+    margin-top: 30px;
+  }
+
+  .bottomContent {
+    grid-template-columns: 1fr 1fr;
+    gap: 7px 28px;
+    padding: 17px 0;
+  }
+
+  .bottomContent span {
+    display: none;
+  }
+
+  .vialoopCredit {
+    justify-self: end;
+  }
+}
+
+@media (max-width: 720px) {
+  .imageSection {
+    min-height: 395px;
+  }
+
+  .backgroundImage {
+    object-position: 58% center;
+  }
+
+  .slogan {
+    width: calc(100% - 36px);
+    margin-top: -68px;
+  }
+
+  .sloganLine {
+    width: 38px;
+    margin-bottom: 17px;
+  }
+
+  .slogan p {
+    margin-bottom: 10px;
+    font-size: 0.58rem;
+  }
+
+  .slogan h2 {
+    max-width: 410px;
+    font-size: clamp(2.1rem, 10.8vw, 3rem);
+    line-height: 1;
+  }
+
+  .informationWrapper {
+    width: calc(100% - 28px);
+    margin-top: -76px;
+  }
+
+  .information {
+    grid-template-columns: 1fr;
+  }
+
+  .column {
+    min-height: auto;
+    padding: 39px 27px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .column:last-child {
+    border-bottom: 0;
+  }
+
+  .column:not(:last-child)::after {
+    display: none;
+  }
+
+  .logoLink {
+    width: min(220px, 78%);
+  }
+
+  .description {
+    max-width: 390px;
+  }
+
+  .socialNetworks {
+    margin-top: 26px;
+    padding-top: 0;
+  }
+
+  .columnHeading {
+    margin-bottom: 24px;
+  }
+
+  .contactList {
+    gap: 20px;
+  }
+
+  .quoteButton {
+    max-width: 360px;
+  }
+
+  .bottomContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: calc(100% - 40px);
+    min-height: 116px;
+    gap: 7px;
+    padding: 18px 0;
+    text-align: center;
+  }
+
+  .bottomContent span {
+    display: block;
+    text-align: center;
+  }
+
+  .vialoopCredit {
+    justify-self: auto;
+    text-align: center;
+  }
+}
+
+@media (max-width: 420px) {
+  .informationWrapper {
+    width: calc(100% - 18px);
+  }
+
+  .column {
+    padding-right: 22px;
+    padding-left: 22px;
+  }
+
+  .contactItem,
+  .addressItem {
+    grid-template-columns: 37px minmax(0, 1fr);
+    gap: 11px;
+  }
+
+  .contactIcon {
+    width: 37px;
+    height: 37px;
+  }
+
+  .contactItem strong,
+  .addressItem strong {
+    font-size: 0.71rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backgroundImage,
+  .slogan,
+  .sloganLine,
+  .informationWrapper {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .navigation a,
+  .socialLink,
+  .contactIcon,
+  .quoteButton,
+  .buttonArrow,
+  .vialoopCredit {
+    transition: none;
+  }
+}

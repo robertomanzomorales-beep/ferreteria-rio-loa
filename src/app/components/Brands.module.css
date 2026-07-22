@@ -1,0 +1,605 @@
+.brands {
+  --blue: #0057b8;
+  --blue-dark: #003d82;
+  --blue-deep: #002b5c;
+  --orange: #ff7f32;
+  --black: #111a22;
+  --white: #ffffff;
+  --entry-x: 0px;
+  --local-delay: 0ms;
+
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--white);
+}
+
+.header {
+  position: relative;
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.25fr)
+    minmax(310px, 0.55fr);
+  align-items: end;
+  gap: clamp(45px, 7vw, 100px);
+  width: min(1280px, calc(100% - 72px));
+  margin: 0 auto;
+  padding:
+    clamp(70px, 7vw, 104px)
+    0
+    clamp(42px, 4vw, 58px);
+}
+
+.header::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  content: "";
+  background: rgba(17, 26, 34, 0.15);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition:
+    transform 1000ms 300ms
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.heading {
+  min-width: 0;
+  opacity: 0;
+  transform: translate3d(-105px, 0, 0);
+  transition:
+    opacity 850ms 80ms
+    cubic-bezier(0.22, 1, 0.36, 1),
+    transform 950ms 80ms
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+  color: var(--blue);
+  font-family:
+    "MADE TOMMY",
+    "Montserrat",
+    Arial,
+    sans-serif;
+  font-size: 0.64rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  width: 27px;
+  height: 3px;
+  content: "";
+  background: var(--orange);
+}
+
+.title {
+  max-width: 740px;
+  margin: 0;
+  color: var(--black);
+  font-family:
+    "MADE TOMMY",
+    "Montserrat",
+    Arial,
+    sans-serif;
+  font-size: clamp(2.45rem, 4.25vw, 4.05rem);
+  font-weight: 700;
+  line-height: 0.99;
+  letter-spacing: -0.052em;
+  text-wrap: balance;
+}
+
+.title span {
+  color: var(--blue);
+}
+
+.headerInformation {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  align-items: start;
+  gap: 16px;
+  padding-bottom: 3px;
+  opacity: 0;
+  transform: translate3d(90px, 0, 0);
+  transition:
+    opacity 800ms 160ms
+    cubic-bezier(0.22, 1, 0.36, 1),
+    transform 900ms 160ms
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.informationLine {
+  display: block;
+  width: 100%;
+  height: 2px;
+  margin-top: 9px;
+  background: var(--orange);
+}
+
+.headerInformation p {
+  margin: 0;
+  color: #68727a;
+  font-family:
+    "MADE TOMMY",
+    "Montserrat",
+    Arial,
+    sans-serif;
+  font-size: 0.84rem;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.header[data-visible="true"]::after {
+  transform: scaleX(1);
+}
+
+.header[data-visible="true"] .heading,
+.header[data-visible="true"] .headerInformation {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 3px;
+  width: 100%;
+  padding: 3px;
+  background: var(--white);
+}
+
+.brand {
+  position: relative;
+  grid-column: span 3;
+  height: clamp(220px, 20vw, 286px);
+  min-width: 0;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--blue-deep);
+  opacity: 0;
+  clip-path: inset(18% 0 18% 0);
+  transform:
+    translate3d(var(--entry-x), 110px, 0)
+    scale(0.93);
+  transition:
+    opacity 750ms var(--local-delay)
+    cubic-bezier(0.22, 1, 0.36, 1),
+    clip-path 950ms var(--local-delay)
+    cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1000ms var(--local-delay)
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.brand:nth-child(1) {
+  grid-column: span 5;
+}
+
+.brand:nth-child(2) {
+  grid-column: span 3;
+}
+
+.brand:nth-child(3) {
+  grid-column: span 4;
+}
+
+.brand:nth-child(-n + 3) {
+  height: clamp(250px, 23vw, 330px);
+}
+
+.brand[data-visible="true"] {
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.background {
+  z-index: 0;
+  object-fit: cover;
+  filter: saturate(0.78) contrast(1.08);
+  transform: scale(1.04);
+  transition:
+    transform 1000ms
+    cubic-bezier(0.22, 1, 0.36, 1),
+    filter 700ms ease;
+}
+
+.chromaticOverlay,
+.baseShade,
+.hoverShade,
+.lightPass {
+  position: absolute;
+  pointer-events: none;
+}
+
+.chromaticOverlay {
+  z-index: 1;
+  inset: 0;
+  background: rgba(0, 87, 184, 0.7);
+  mix-blend-mode: multiply;
+  transition:
+    background-color 600ms ease,
+    opacity 600ms ease;
+}
+
+.orange .chromaticOverlay {
+  background: rgba(255, 127, 50, 0.72);
+}
+
+.baseShade {
+  z-index: 2;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 22, 48, 0.16) 0%,
+      rgba(0, 22, 48, 0.02) 40%,
+      rgba(0, 18, 39, 0.54) 100%
+    );
+}
+
+.hoverShade {
+  z-index: 3;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 14, 30, 0.12) 0%,
+      rgba(0, 14, 30, 0.64) 52%,
+      rgba(0, 10, 23, 0.96) 100%
+    );
+  opacity: 0;
+  transform: translate3d(0, 46%, 0);
+  transition:
+    opacity 650ms
+    cubic-bezier(0.22, 1, 0.36, 1),
+    transform 780ms
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.lightPass {
+  z-index: 4;
+  top: -45%;
+  bottom: -45%;
+  left: -38%;
+  width: 19%;
+  background: rgba(255, 255, 255, 0.12);
+  transform: rotate(13deg) translateX(-180%);
+  transition:
+    transform 1000ms
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.topInformation {
+  position: absolute;
+  z-index: 6;
+  top: 18px;
+  right: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.category,
+.index {
+  color: rgba(255, 255, 255, 0.8);
+  font-family:
+    "MADE TOMMY",
+    "Montserrat",
+    Arial,
+    sans-serif;
+  font-size: 0.54rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.category {
+  opacity: 0;
+  transform: translate3d(-16px, 0, 0);
+  transition:
+    opacity 450ms ease,
+    transform 550ms
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.index {
+  opacity: 0.72;
+}
+
+.logoArea {
+  position: absolute;
+  z-index: 6;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 48px 24px 55px;
+}
+
+.logoFrame {
+  position: relative;
+  width: min(52%, 188px);
+  height: clamp(70px, 7.5vw, 98px);
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  transform: translate3d(0, 0, 0);
+  transition:
+    transform 700ms
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.logo {
+  object-fit: contain;
+  filter:
+    drop-shadow(0 4px 5px rgba(0, 0, 0, 0.24))
+    drop-shadow(0 14px 20px rgba(0, 18, 39, 0.28));
+}
+
+.bottomInformation {
+  position: absolute;
+  z-index: 6;
+  right: 20px;
+  bottom: 17px;
+  left: 20px;
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  transition:
+    opacity 500ms 70ms ease,
+    transform 600ms 70ms
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.brandLabel {
+  display: block;
+  margin-bottom: 4px;
+  color: rgba(255, 255, 255, 0.62);
+  font-family:
+    "MADE TOMMY",
+    "Montserrat",
+    Arial,
+    sans-serif;
+  font-size: 0.5rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.bottomInformation h3 {
+  margin: 0;
+  color: var(--white);
+  font-family:
+    "MADE TOMMY",
+    "Montserrat",
+    Arial,
+    sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.accentLine {
+  position: absolute;
+  z-index: 7;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition:
+    transform 700ms
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.orange .accentLine {
+  background: var(--blue);
+}
+
+.brand:hover .background {
+  filter: saturate(0.64) contrast(1.14);
+  transform: scale(1.12);
+}
+
+.brand:hover .chromaticOverlay {
+  opacity: 0.82;
+}
+
+.brand:hover .hoverShade {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.brand:hover .lightPass {
+  transform: rotate(13deg) translateX(820%);
+}
+
+.brand:hover .logoFrame {
+  transform: translate3d(0, -12px, 0) scale(1.06);
+}
+
+.brand:hover .category,
+.brand:hover .bottomInformation {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.brand:hover .accentLine {
+  transform: scaleX(1);
+}
+
+@media (max-width: 1080px) {
+  .header {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .headerInformation {
+    max-width: 680px;
+    transform: translate3d(-60px, 30px, 0);
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .brand,
+  .brand:nth-child(1),
+  .brand:nth-child(2),
+  .brand:nth-child(3) {
+    grid-column: span 1;
+    height: clamp(245px, 36vw, 330px);
+  }
+
+  .brand:last-child {
+    grid-column: span 2;
+  }
+
+  .logoFrame {
+    width: min(48%, 180px);
+    height: 92px;
+  }
+}
+
+@media (max-width: 680px) {
+  .header {
+    grid-template-columns: 1fr;
+    gap: 17px;
+    width: calc(100% - 36px);
+    padding: 66px 0 38px;
+  }
+
+  .eyebrow {
+    margin-bottom: 14px;
+    font-size: 0.58rem;
+  }
+
+  .eyebrow::before {
+    width: 24px;
+  }
+
+  .title {
+    max-width: 520px;
+    font-size: clamp(2.2rem, 10.6vw, 3rem);
+    line-height: 1;
+  }
+
+  .headerInformation {
+    grid-template-columns: 24px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .headerInformation p {
+    font-size: 0.82rem;
+    line-height: 1.62;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+
+  .brand,
+  .brand:nth-child(1),
+  .brand:nth-child(2),
+  .brand:nth-child(3),
+  .brand:last-child {
+    --entry-x: 0px !important;
+
+    grid-column: span 1;
+    height: clamp(235px, 70vw, 300px);
+  }
+
+  .brand {
+    clip-path: inset(20% 0 20% 0);
+    transform: translate3d(0, 105px, 0) scale(0.94);
+  }
+
+  .brand[data-visible="true"] {
+    clip-path: inset(0 0 0 0);
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  .topInformation {
+    top: 16px;
+    right: 17px;
+    left: 17px;
+  }
+
+  .category {
+    opacity: 0.78;
+    transform: none;
+  }
+
+  .logoFrame {
+    width: min(50%, 174px);
+    height: 88px;
+  }
+
+  .bottomInformation {
+    right: 17px;
+    bottom: 16px;
+    left: 17px;
+    opacity: 1;
+    transform: none;
+  }
+
+  .hoverShade {
+    opacity: 0.54;
+    transform: translate3d(0, 28%, 0);
+  }
+}
+
+@media (hover: none) {
+  .category,
+  .bottomInformation {
+    opacity: 1;
+    transform: none;
+  }
+
+  .hoverShade {
+    opacity: 0.5;
+    transform: translate3d(0, 30%, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heading,
+  .headerInformation,
+  .brand {
+    opacity: 1;
+    clip-path: none;
+    transform: none;
+    transition: none;
+  }
+
+  .header::after {
+    transform: scaleX(1);
+    transition: none;
+  }
+
+  .background,
+  .chromaticOverlay,
+  .hoverShade,
+  .lightPass,
+  .logoFrame,
+  .category,
+  .bottomInformation,
+  .accentLine {
+    transition: none;
+  }
+}
