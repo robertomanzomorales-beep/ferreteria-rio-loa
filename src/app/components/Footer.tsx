@@ -357,12 +357,14 @@ export default function Footer() {
             >
               <span>Solicitar cotización</span>
 
-              <span
-                className={styles.buttonArrow}
+              <Image
+                className={styles.buttonArrowImage}
+                src="/flecha-horizontal.webp"
+                alt=""
+                width={21}
+                height={21}
                 aria-hidden="true"
-              >
-                <span>↗</span>
-              </span>
+              />
             </a>
           </div>
         </div>
