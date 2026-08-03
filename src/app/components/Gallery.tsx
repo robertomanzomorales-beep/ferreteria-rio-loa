@@ -109,7 +109,7 @@ const galleryImages: GalleryImage[] = [
     directionY: "140px",
   },
   {
-    src: "/muestrario-6.webp",
+    src: "/muestrario-6-copia.webp",
     alt: "Herramientas y accesorios disponibles en sala",
     category: "Herramientas",
     title: "Equipamiento para trabajar",

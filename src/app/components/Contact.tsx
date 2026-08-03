@@ -19,6 +19,11 @@ type Department = {
   emails: string[];
 };
 
+type FormSubmitResponse = {
+  success?: boolean | string;
+  message?: string;
+};
+
 const FORM_ENDPOINT =
   "https://formsubmit.co/ajax/contacto@ferreteriarioloa.cl";
 
@@ -105,7 +110,9 @@ export default function Contact() {
 
     observer.observe(section);
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   async function handleSubmit(
@@ -115,6 +122,15 @@ export default function Contact() {
 
     const form = event.currentTarget;
     const formData = new FormData(form);
+
+    const senderEmail = formData.get("Correo electrónico");
+
+    if (
+      typeof senderEmail === "string" &&
+      senderEmail.trim().length > 0
+    ) {
+      formData.set("_replyto", senderEmail.trim());
+    }
 
     setFormStatus("sending");
 
@@ -131,15 +147,22 @@ export default function Contact() {
         throw new Error("No fue posible enviar el formulario.");
       }
 
-      const result = await response.json();
+      const result =
+        (await response.json()) as FormSubmitResponse;
 
-      if (result.success === false) {
-        throw new Error("FormSubmit rechazó el envío.");
+      if (
+        result.success === false ||
+        result.success === "false"
+      ) {
+        throw new Error(
+          result.message || "FormSubmit rechazó el envío."
+        );
       }
 
       form.reset();
       setFormStatus("success");
-    } catch {
+    } catch (error) {
+      console.error("Error al enviar el formulario:", error);
       setFormStatus("error");
     }
   }
@@ -179,7 +202,9 @@ export default function Contact() {
                 Atención especializada
               </span>
 
-              <h3>Comuníquese directamente con el área indicada.</h3>
+              <h3>
+                Comuníquese directamente con el área indicada.
+              </h3>
 
               <p>
                 Seleccione el contacto correspondiente para recibir
@@ -265,7 +290,7 @@ export default function Contact() {
                   <strong>Av. Grecia 880, Calama</strong>
 
                   <a
-                    href="https://www.google.com/maps/search/?api=1&query=Av.%20Grecia%20880%2C%20Calama"
+                    href="https://www.google.com/maps/place/Ferreter%C3%ADa+R%C3%ADo+Loa/@-22.473361,-68.9315727,264m/data=!3m1!1e3!4m6!3m5!1s0x96ac084a91eb99f5:0x5031a6ec2061703d!8m2!3d-22.4736527!4d-68.9311718!16s%2Fg%2F11dxcqw01d?entry=ttu&g_ep=EgoyMDI2MDcyOS4wIKXMDSoASAFQAw%3D%3D"
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -303,29 +328,37 @@ export default function Contact() {
 
           <div className={styles.formPanel}>
             <div className={styles.formHeading}>
-              <Image
-                className={styles.formIcon}
-                src="/icono-correo.webp"
-                alt=""
-                width={38}
-                height={38}
-              />
+              <span
+                className={styles.formIconBox}
+                aria-hidden="true"
+              >
+                <Image
+                  className={styles.formIcon}
+                  src="/icono-correo.webp"
+                  alt=""
+                  width={24}
+                  height={24}
+                />
+              </span>
 
-              <div>
-                <span>Solicitud comercial</span>
+              <div className={styles.formHeadingText}>
+                <span className={styles.formEyebrow}>
+                  Solicitud comercial
+                </span>
                 <h3>Envíenos su requerimiento</h3>
               </div>
             </div>
 
             <p className={styles.formIntroduction}>
               Complete el formulario y nuestro equipo revisará su
-              solicitud para responder con disponibilidad, alternativas
-              y condiciones de entrega.
+              solicitud para responder con disponibilidad,
+              alternativas y condiciones de entrega.
             </p>
 
             <form
               className={styles.form}
               onSubmit={handleSubmit}
+              aria-busy={formStatus === "sending"}
             >
               <input
                 type="hidden"
@@ -502,8 +535,8 @@ export default function Contact() {
                 </button>
 
                 <p>
-                  Sus datos serán utilizados únicamente para responder
-                  este requerimiento.
+                  Sus datos serán utilizados únicamente para
+                  responder este requerimiento.
                 </p>
               </div>
 
@@ -522,20 +555,25 @@ export default function Contact() {
               >
                 {formStatus === "success" && (
                   <>
-                    <strong>Solicitud enviada correctamente.</strong>
+                    <strong>
+                      Mensaje enviado correctamente.
+                    </strong>
                     <span>
-                      Recibimos su requerimiento y nos pondremos en
-                      contacto a la brevedad.
+                      Recibimos su requerimiento en
+                      contacto@ferreteriarioloa.cl y nuestro
+                      equipo responderá a la brevedad.
                     </span>
                   </>
                 )}
 
                 {formStatus === "error" && (
                   <>
-                    <strong>No pudimos enviar la solicitud.</strong>
+                    <strong>
+                      No pudimos enviar el mensaje.
+                    </strong>
                     <span>
-                      Inténtelo nuevamente o comuníquese directamente
-                      por WhatsApp.
+                      Inténtelo nuevamente o comuníquese
+                      directamente por WhatsApp.
                     </span>
                   </>
                 )}

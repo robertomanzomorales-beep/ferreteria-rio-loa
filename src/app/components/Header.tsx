@@ -253,7 +253,11 @@ export default function Header() {
             >
               <Image
                 className={styles.logo}
-                src="/logo-rio-loa-menu.webp"
+                src={
+                  menuOpen
+                    ? "/logo-rio-loa-menu-blanco.webp"
+                    : "/logo-rio-loa-menu.webp"
+                }
                 alt="Ferretería Río Loa"
                 width={240}
                 height={100}
@@ -319,9 +323,11 @@ export default function Header() {
                 aria-hidden="true"
               >
                 <span className={styles.menuLineTop} />
+
                 <span
                   className={styles.menuLineMiddle}
                 />
+
                 <span
                   className={styles.menuLineBottom}
                 />

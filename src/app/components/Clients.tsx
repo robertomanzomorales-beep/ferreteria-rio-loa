@@ -7,6 +7,7 @@ import styles from "./Clients.module.css";
 type ClientLogo = {
   name: string;
   image: string;
+  isMunicipalidad?: boolean;
 };
 
 const clients: ClientLogo[] = [
@@ -31,10 +32,6 @@ const clients: ClientLogo[] = [
     image: "/finning-cat.webp",
   },
   {
-    name: "Global IMT",
-    image: "/global-imt.webp",
-  },
-  {
     name: "Ingeniería Civil Vicente",
     image: "/icv.webp",
   },
@@ -44,11 +41,16 @@ const clients: ClientLogo[] = [
   },
   {
     name: "Maxam",
-    image: "/maxam.webp",
+    image: "/maxan-ok.webp",
+  },
+  {
+    name: "Montecristo",
+    image: "/consorcio.webp",
   },
   {
     name: "Municipalidad de Calama",
-    image: "/municipalidad-de-calama.webp",
+    image: "/logo_municipalidad_calama_350px.webp",
+    isMunicipalidad: true,
   },
   {
     name: "Sigma",
@@ -60,26 +62,47 @@ function LogoGroup({ duplicate = false }: { duplicate?: boolean }) {
   return (
     <div
       className={styles.logoGroup}
-      aria-hidden={duplicate ? "true" : undefined}
+      aria-hidden={duplicate ? true : undefined}
     >
-      {clients.map((client) => (
-        <div
-          className={styles.logoCard}
-          key={`${duplicate ? "duplicate" : "original"}-${client.name}`}
-        >
-          <div className={styles.logoWrapper}>
-            <Image
-              src={client.image}
-              alt={duplicate ? "" : `Logo de ${client.name}`}
-              fill
-              sizes="(max-width: 640px) 150px, 180px"
-              className={styles.logoImage}
-              loading="lazy"
-              draggable={false}
-            />
+      {clients.map((client) => {
+        const isMunicipalidad = client.isMunicipalidad === true;
+
+        return (
+          <div
+            key={`${duplicate ? "duplicate" : "original"}-${client.name}`}
+            className={`${styles.logoCard} ${
+              isMunicipalidad ? styles.logoCardMunicipalidad : ""
+            }`}
+          >
+            <div
+              className={`${styles.logoWrapper} ${
+                isMunicipalidad
+                  ? styles.logoWrapperMunicipalidad
+                  : ""
+              }`}
+            >
+              <Image
+                src={client.image}
+                alt={duplicate ? "" : `Logo de ${client.name}`}
+                fill
+                sizes={
+                  isMunicipalidad
+                    ? "(max-width: 640px) 78px, (max-width: 900px) 86px, 90px"
+                    : "(max-width: 640px) 124px, (max-width: 900px) 138px, 150px"
+                }
+                className={`${styles.logoImage} ${
+                  isMunicipalidad
+                    ? styles.logoImageMunicipalidad
+                    : ""
+                }`}
+                quality={100}
+                loading="lazy"
+                draggable={false}
+              />
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
@@ -133,16 +156,21 @@ export default function Clients() {
       <div className={styles.container}>
         <div className={styles.heading}>
           <div className={styles.headingContent}>
-            <span className={styles.eyebrow}>Nuestros clientes</span>
+            <span className={styles.eyebrow}>
+              Nuestros clientes
+            </span>
 
-            <h2 id="clients-title" className={styles.title}>
+            <h2
+              id="clients-title"
+              className={styles.title}
+            >
               Empresas que confían en nuestro trabajo
             </h2>
           </div>
 
           <p className={styles.description}>
-            Abastecemos a empresas e instituciones vinculadas a la minería,
-            construcción, industria y sector público.
+            Abastecemos a empresas e instituciones vinculadas a la
+            minería, construcción, industria y sector público.
           </p>
         </div>
       </div>
@@ -152,24 +180,33 @@ export default function Clients() {
         role="region"
         aria-label="Clientes de Ferretería Río Loa"
       >
-        <div className={styles.fadeLeft} aria-hidden="true" />
+        <div
+          className={styles.fadeLeft}
+          aria-hidden="true"
+        />
 
         <div className={styles.track}>
           <LogoGroup />
           <LogoGroup duplicate />
         </div>
 
-        <div className={styles.fadeRight} aria-hidden="true" />
+        <div
+          className={styles.fadeRight}
+          aria-hidden="true"
+        />
       </div>
 
       <div className={styles.container}>
         <div className={styles.sectors}>
           <span>Minería</span>
           <i aria-hidden="true" />
+
           <span>Construcción</span>
           <i aria-hidden="true" />
+
           <span>Industria</span>
           <i aria-hidden="true" />
+
           <span>Sector público</span>
         </div>
       </div>

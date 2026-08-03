@@ -1,11 +1,22 @@
 .hero {
+  --brand-blue: #0057bb;
+  --brand-blue-dark: #002c6c;
+  --brand-orange: #ff7f32;
+  --brand-white: #ffffff;
+
   position: relative;
+  isolation: isolate;
   width: 100%;
-  height: clamp(430px, 35vw, 560px);
-  min-height: 430px;
+  height: clamp(500px, 37vw, 610px);
+  min-height: 500px;
   overflow: hidden;
-  background: #0057bb;
-  font-family: "Made Tommy", Arial, sans-serif;
+  background: var(--brand-blue);
+  font-family:
+    "MADE TOMMY",
+    "Montserrat",
+    Arial,
+    sans-serif;
+  touch-action: pan-y;
 }
 
 .slides {
@@ -14,147 +25,206 @@
   height: 100%;
 }
 
+/* =========================================================
+   LÁMINAS E IMÁGENES
+   ========================================================= */
+
 .slide {
   position: absolute;
-  inset: 0;
   z-index: 0;
-  visibility: hidden;
+  inset: 0;
+  overflow: hidden;
   opacity: 0;
+  pointer-events: none;
+  transform: translateZ(0);
   transition:
-    opacity 700ms ease,
-    visibility 700ms ease;
+    opacity 950ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity;
 }
 
 .slideActive {
   z-index: 1;
-  visibility: visible;
   opacity: 1;
 }
 
 .backgroundImage {
   object-fit: cover;
-  transform: scale(1.04);
-  transition: transform 7s ease;
+  object-position:
+    var(
+      --desktop-image-position,
+      center center
+    );
+  filter: saturate(1.02) contrast(1.02);
+  transform: scale(1.035);
+  transition:
+    transform 7.2s cubic-bezier(0.2, 0.65, 0.3, 1);
+  will-change: transform;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
 .slideActive .backgroundImage {
   transform: scale(1);
 }
 
+/* =========================================================
+   OVERLAY ESTÁTICO
+   ========================================================= */
+
 .overlay {
   position: absolute;
+  z-index: 2;
   inset: 0;
-  z-index: 1;
+  pointer-events: none;
   background:
     linear-gradient(
       90deg,
-      rgba(0, 24, 68, 0.97) 0%,
-      rgba(0, 45, 111, 0.93) 29%,
-      rgba(0, 70, 154, 0.67) 50%,
-      rgba(0, 87, 187, 0.24) 72%,
-      rgba(0, 87, 187, 0.04) 100%
+      rgba(0, 22, 63, 0.98) 0%,
+      rgba(0, 39, 99, 0.94) 28%,
+      rgba(0, 64, 145, 0.72) 51%,
+      rgba(0, 87, 187, 0.28) 73%,
+      rgba(0, 87, 187, 0.06) 100%
     ),
-    linear-gradient(0deg, rgba(0, 25, 70, 0.35) 0%, transparent 52%);
+    linear-gradient(
+      0deg,
+      rgba(0, 20, 56, 0.42) 0%,
+      transparent 55%
+    );
 }
+
+/* =========================================================
+   CONTENIDO
+   ========================================================= */
 
 .contentWrapper {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   display: flex;
   align-items: center;
-  width: min(100% - 96px, 1280px);
+  width: min(1280px, calc(100% - 144px));
   height: 100%;
   margin: 0 auto;
 }
 
 .content {
-  width: min(100%, 630px);
-  color: #ffffff;
-  opacity: 0;
-  transform: translate3d(-72px, 0, 0);
+  width: min(100%, 670px);
+  color: var(--brand-white);
 }
 
-.contentActive {
-  animation: contentEntrance 850ms cubic-bezier(0.16, 1, 0.3, 1) 140ms both;
+.eyebrow,
+.title,
+.description,
+.actions {
+  opacity: 0;
+  transform: translate3d(0, 48px, 0);
+  animation:
+    contentEntrance 760ms
+    cubic-bezier(0.16, 1, 0.3, 1)
+    both;
 }
 
 .eyebrow {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin: 0 0 15px;
-  color: #ff7f32;
+  gap: 11px;
+  margin: 0 0 17px;
+  color: var(--brand-orange);
   font-size: 0.74rem;
   font-weight: 700;
-  letter-spacing: 0.15em;
   line-height: 1.2;
-}
-
-.eyebrow::before {
-  width: 30px;
-  height: 3px;
-  content: "";
-  background: #ff7f32;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  animation-delay: 110ms;
 }
 
 .title {
-  max-width: 620px;
+  max-width: 660px;
   margin: 0;
-  color: #ffffff;
-  font-size: clamp(2.45rem, 4vw, 4.3rem);
+  color: var(--brand-white);
+  font-size: clamp(2.7rem, 4.15vw, 4.65rem);
   font-weight: 700;
-  letter-spacing: -0.05em;
-  line-height: 0.99;
+  line-height: 0.98;
+  letter-spacing: -0.052em;
   text-wrap: balance;
+  animation-delay: 190ms;
 }
 
 .description {
-  max-width: 555px;
-  margin: 21px 0 0;
-  color: rgba(255, 255, 255, 0.94);
+  max-width: 570px;
+  margin: 23px 0 0;
+  color: rgba(255, 255, 255, 0.91);
   font-size: clamp(0.98rem, 1.15vw, 1.1rem);
   font-weight: 400;
-  line-height: 1.58;
+  line-height: 1.62;
+  animation-delay: 270ms;
 }
 
 .actions {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 28px;
+  margin-top: 31px;
+  animation-delay: 350ms;
 }
+
+.eyebrow::before {
+  width: 31px;
+  height: 3px;
+  flex: 0 0 auto;
+  content: "";
+  background: var(--brand-orange);
+}
+
+/* =========================================================
+   BOTONES
+   ========================================================= */
 
 .primaryButton,
 .secondaryButton {
   display: inline-flex;
+  min-height: 49px;
   align-items: center;
   justify-content: center;
-  min-height: 47px;
-  padding: 0 20px;
-  border: 1px solid transparent;
+  box-sizing: border-box;
+  padding: 0 21px;
   font-family: inherit;
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   font-weight: 700;
   line-height: 1;
   text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 2px;
   transition:
-    background-color 180ms ease,
-    border-color 180ms ease,
-    color 180ms ease,
-    transform 180ms ease;
+    color 220ms ease,
+    background-color 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .primaryButton {
-  gap: 17px;
-  color: #ffffff;
-  background: #ff7f32;
-  border-color: #ff7f32;
+  gap: 16px;
+  color: var(--brand-white);
+  background: var(--brand-orange);
+  border-color: var(--brand-orange);
 }
 
 .secondaryButton {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.75);
+  color: var(--brand-white);
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(4px);
+}
+
+.buttonArrowImage {
+  display: block;
+  width: 19px;
+  height: 19px;
+  flex: 0 0 auto;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  transition:
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .primaryButton:hover,
@@ -163,62 +233,103 @@
 }
 
 .primaryButton:hover {
-  background: #ff9655;
-  border-color: #ff9655;
+  background: #ff9250;
+  border-color: #ff9250;
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.16);
+}
+
+.primaryButton:hover .buttonArrowImage {
+  transform: translateX(4px);
 }
 
 .secondaryButton:hover {
-  color: #0057bb;
-  background: #ffffff;
-  border-color: #ffffff;
+  color: var(--brand-blue);
+  background: var(--brand-white);
+  border-color: var(--brand-white);
 }
+
+.primaryButton:focus-visible,
+.secondaryButton:focus-visible,
+.arrow:focus-visible,
+.paginationButton:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.92);
+  outline-offset: 4px;
+}
+
+/* =========================================================
+   FLECHAS DEL CARRUSEL
+   ========================================================= */
 
 .arrow {
   position: absolute;
-  z-index: 3;
+  z-index: 5;
   top: 50%;
   display: grid;
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   padding: 0;
-  color: #ffffff;
-  background: rgba(0, 35, 87, 0.46);
-  border: 1px solid rgba(255, 255, 255, 0.62);
-  border-radius: 50%;
-  cursor: pointer;
   place-items: center;
+  cursor: pointer;
+  background: rgba(0, 31, 79, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.56);
+  border-radius: 3px;
+  backdrop-filter: blur(6px);
   transform: translateY(-50%);
   transition:
-    background-color 180ms ease,
-    border-color 180ms ease,
-    transform 180ms ease;
+    background-color 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .arrow:hover {
-  background: #ff7f32;
-  border-color: #ff7f32;
+  background: var(--brand-orange);
+  border-color: var(--brand-orange);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
   transform: translateY(-50%) scale(1.06);
 }
 
-.arrow span {
-  font-size: 1.35rem;
-  line-height: 1;
+.arrowImage {
+  display: block;
+  width: 21px;
+  height: 21px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  transition:
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.arrowImagePrevious {
+  transform: rotate(180deg);
+}
+
+.arrowNext:hover .arrowImage {
+  transform: translateX(3px);
+}
+
+.arrowPrevious:hover .arrowImagePrevious {
+  transform: rotate(180deg) translateX(3px);
 }
 
 .arrowPrevious {
-  left: 28px;
+  left: 25px;
 }
 
 .arrowNext {
-  right: 28px;
+  right: 25px;
 }
+
+/* =========================================================
+   PAGINACIÓN
+   ========================================================= */
 
 .pagination {
   position: absolute;
-  z-index: 3;
-  bottom: 28px;
+  z-index: 5;
+  bottom: 29px;
   left: 50%;
   display: flex;
+  align-items: center;
   gap: 9px;
   transform: translateX(-50%);
 }
@@ -227,28 +338,34 @@
   width: 9px;
   height: 9px;
   padding: 0;
-  background: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.58);
   border: 0;
   border-radius: 999px;
-  cursor: pointer;
   transition:
-    background-color 180ms ease,
-    width 180ms ease;
+    width 240ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 220ms ease,
+    transform 220ms ease;
 }
 
 .paginationButton:hover {
-  background: #ffffff;
+  background: var(--brand-white);
+  transform: scale(1.12);
 }
 
 .paginationButtonActive {
-  width: 29px;
-  background: #ff7f32;
+  width: 31px;
+  background: var(--brand-orange);
 }
+
+/* =========================================================
+   ANIMACIÓN VERTICAL
+   ========================================================= */
 
 @keyframes contentEntrance {
   from {
     opacity: 0;
-    transform: translate3d(-72px, 0, 0);
+    transform: translate3d(0, 48px, 0);
   }
 
   to {
@@ -257,14 +374,26 @@
   }
 }
 
-@media (max-width: 800px) {
+/* =========================================================
+   TABLET Y MÓVIL
+   ========================================================= */
+
+@media (max-width: 900px) {
   .hero {
-    height: 400px;
-    min-height: 400px;
+    height: 470px;
+    min-height: 470px;
   }
 
   .backgroundImage {
-    transform: scale(1.01);
+    object-position:
+      var(
+        --mobile-image-position,
+        var(
+          --desktop-image-position,
+          center center
+        )
+      );
+    transform: scale(1.02);
   }
 
   .slideActive .backgroundImage {
@@ -275,65 +404,88 @@
     background:
       linear-gradient(
         0deg,
-        rgba(0, 27, 74, 0.94) 0%,
-        rgba(0, 48, 116, 0.75) 45%,
+        rgba(0, 23, 66, 0.98) 0%,
+        rgba(0, 38, 96, 0.94) 42%,
+        rgba(0, 61, 142, 0.62) 72%,
         rgba(0, 87, 187, 0.12) 100%
       ),
-      linear-gradient(90deg, rgba(0, 30, 82, 0.46) 0%, transparent 78%);
+      linear-gradient(
+        90deg,
+        rgba(0, 29, 77, 0.42) 0%,
+        transparent 84%
+      );
   }
 
   .contentWrapper {
     align-items: flex-end;
-    width: min(100% - 40px, 640px);
-    padding-bottom: 65px;
+    width: min(640px, calc(100% - 38px));
+    padding-bottom: 73px;
   }
 
-  .content {
-    width: 100%;
+  .eyebrow,
+  .title,
+  .description,
+  .actions {
+    transform: translate3d(0, 38px, 0);
   }
 
   .eyebrow {
     gap: 8px;
-    margin-bottom: 9px;
-    font-size: 0.59rem;
-    letter-spacing: 0.115em;
+    margin-bottom: 10px;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
   }
 
   .eyebrow::before {
-    width: 22px;
+    width: 23px;
     height: 2px;
   }
 
   .title {
-    max-width: 405px;
-    font-size: clamp(1.72rem, 7.8vw, 2.35rem);
-    line-height: 1.04;
+    max-width: 530px;
+    font-size: clamp(1.95rem, 6.5vw, 2.6rem);
+    line-height: 1.01;
+    letter-spacing: -0.042em;
   }
 
   .description {
-    max-width: 390px;
-    margin-top: 11px;
-    font-size: 0.8rem;
-    line-height: 1.44;
+    max-width: 500px;
+    margin-top: 13px;
+    font-size: 0.86rem;
+    line-height: 1.48;
   }
 
   .actions {
-    gap: 9px;
-    margin-top: 17px;
+    gap: 10px;
+    margin-top: 19px;
   }
 
   .primaryButton,
   .secondaryButton {
-    min-height: 38px;
-    padding: 0 13px;
-    font-size: 0.72rem;
+    min-height: 41px;
+    padding: 0 15px;
+    font-size: 0.74rem;
   }
+
+  .primaryButton {
+    gap: 13px;
+  }
+
+  .buttonArrowImage {
+    width: 17px;
+    height: 17px;
+  }
+
+  /*
+   * Controles agrupados abajo a la izquierda.
+   * No interfieren con el WhatsApp flotante.
+   */
 
   .arrow {
     top: auto;
-    bottom: 19px;
-    width: 33px;
-    height: 33px;
+    bottom: 16px;
+    width: 36px;
+    height: 36px;
     transform: none;
   }
 
@@ -341,22 +493,25 @@
     transform: scale(1.05);
   }
 
-  .arrow span {
-    font-size: 1.06rem;
+  .arrowImage {
+    width: 17px;
+    height: 17px;
   }
 
   .arrowPrevious {
-    right: 61px;
-    left: auto;
+    right: auto;
+    left: 16px;
   }
 
   .arrowNext {
-    right: 20px;
+    right: auto;
+    left: 59px;
   }
 
   .pagination {
-    bottom: 32px;
-    left: 20px;
+    right: auto;
+    bottom: 30px;
+    left: 108px;
     gap: 7px;
     transform: none;
   }
@@ -367,63 +522,120 @@
   }
 
   .paginationButtonActive {
-    width: 22px;
+    width: 23px;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero {
+    height: 455px;
+    min-height: 455px;
+  }
+
+  .contentWrapper {
+    width: calc(100% - 28px);
+    padding-bottom: 71px;
+  }
+
+  .title {
+    max-width: 430px;
+    font-size: clamp(1.75rem, 8.2vw, 2.08rem);
+    line-height: 1.02;
+  }
+
+  .description {
+    max-width: 420px;
+    margin-top: 12px;
+    font-size: 0.81rem;
+    line-height: 1.45;
+  }
+
+  .actions {
+    margin-top: 17px;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    min-height: 40px;
+    padding: 0 13px;
+    font-size: 0.7rem;
   }
 }
 
 @media (max-width: 420px) {
   .hero {
-    height: 380px;
-    min-height: 380px;
+    height: 445px;
+    min-height: 445px;
   }
 
   .contentWrapper {
-    width: min(100% - 32px, 640px);
-    padding-bottom: 61px;
+    width: calc(100% - 26px);
+    padding-bottom: 69px;
+  }
+
+  .eyebrow {
+    max-width: 300px;
+    margin-bottom: 9px;
+    font-size: 0.56rem;
   }
 
   .title {
-    font-size: 1.65rem;
+    max-width: 360px;
+    font-size: 1.76rem;
   }
 
   .description {
-    font-size: 0.76rem;
+    max-width: 360px;
+    font-size: 0.78rem;
   }
 
   .primaryButton,
   .secondaryButton {
-    min-height: 36px;
-    padding: 0 11px;
-    font-size: 0.68rem;
-  }
-
-  .arrowNext {
-    right: 16px;
+    min-height: 39px;
+    padding: 0 12px;
+    font-size: 0.67rem;
   }
 
   .arrowPrevious {
-    right: 55px;
+    left: 13px;
+  }
+
+  .arrowNext {
+    left: 56px;
   }
 
   .pagination {
-    left: 16px;
+    left: 104px;
   }
 }
+
+/* =========================================================
+   MOVIMIENTO REDUCIDO
+   ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
   .slide,
   .backgroundImage,
-  .content,
   .primaryButton,
   .secondaryButton,
+  .buttonArrowImage,
   .arrow,
+  .arrowImage,
   .paginationButton {
     transition: none;
   }
 
-  .contentActive {
-    animation: none;
+  .backgroundImage,
+  .slideActive .backgroundImage {
+    transform: none;
+  }
+
+  .eyebrow,
+  .title,
+  .description,
+  .actions {
     opacity: 1;
     transform: none;
+    animation: none;
   }
 }

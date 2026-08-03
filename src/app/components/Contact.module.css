@@ -152,11 +152,9 @@
   opacity: 0;
   transform: translate3d(-65px, 0, 0);
   transition:
-    opacity 700ms
-      calc(240ms + (var(--item-index) * 85ms))
+    opacity 700ms calc(240ms + (var(--item-index) * 85ms))
       cubic-bezier(0.22, 1, 0.36, 1),
-    transform 700ms
-      calc(240ms + (var(--item-index) * 85ms))
+    transform 700ms calc(240ms + (var(--item-index) * 85ms))
       cubic-bezier(0.22, 1, 0.36, 1),
     padding-left 250ms ease;
 }
@@ -405,20 +403,51 @@
   z-index: 1;
   display: flex;
   align-items: center;
-  gap: 17px;
+  gap: 20px;
+}
+
+.formIconBox {
+  display: grid;
+  width: 56px;
+  height: 56px;
+  flex: 0 0 56px;
+  place-items: center;
+  background: var(--orange);
+  clip-path: polygon(
+    50% 0%,
+    100% 25%,
+    100% 75%,
+    50% 100%,
+    0% 75%,
+    0% 25%
+  );
+  -webkit-clip-path: polygon(
+    50% 0%,
+    100% 25%,
+    100% 75%,
+    50% 100%,
+    0% 75%,
+    0% 25%
+  );
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.16);
 }
 
 .formIcon {
-  flex: 0 0 auto;
-  width: 36px;
-  height: 36px;
+  display: block;
+  width: 26px;
+  height: 26px;
   object-fit: contain;
+  object-position: center;
   filter: brightness(0) invert(1);
 }
 
-.formHeading span {
+.formHeadingText {
+  min-width: 0;
+}
+
+.formEyebrow {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   color: #ffb17d;
   font-family: "MADE TOMMY", "Montserrat", Arial, sans-serif;
   font-size: 0.61rem;
@@ -428,7 +457,7 @@
   text-transform: uppercase;
 }
 
-.formHeading h3 {
+.formHeadingText h3 {
   margin: 0;
   color: var(--white);
   font-family: "MADE TOMMY", "Montserrat", Arial, sans-serif;
@@ -630,7 +659,7 @@
 .formMessage {
   display: none;
   grid-column: 1 / -1;
-  padding: 15px 17px;
+  padding: 16px 18px;
 }
 
 .formMessage strong,
@@ -640,13 +669,13 @@
 }
 
 .formMessage strong {
-  margin-bottom: 4px;
+  margin-bottom: 5px;
   font-size: 0.8rem;
 }
 
 .formMessage span {
   font-size: 0.71rem;
-  line-height: 1.45;
+  line-height: 1.5;
 }
 
 .successMessage {
@@ -789,9 +818,21 @@
 
   .formHeading {
     align-items: flex-start;
+    gap: 16px;
   }
 
-  .formHeading h3 {
+  .formIconBox {
+    width: 50px;
+    height: 50px;
+    flex: 0 0 50px;
+  }
+
+  .formIcon {
+    width: 23px;
+    height: 23px;
+  }
+
+  .formHeadingText h3 {
     font-size: 1.65rem;
   }
 
@@ -817,6 +858,27 @@
 
   .submitButton {
     width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .formHeading {
+    gap: 14px;
+  }
+
+  .formIconBox {
+    width: 46px;
+    height: 46px;
+    flex: 0 0 46px;
+  }
+
+  .formIcon {
+    width: 21px;
+    height: 21px;
+  }
+
+  .formHeadingText h3 {
+    font-size: 1.48rem;
   }
 }
 

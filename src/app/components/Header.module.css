@@ -756,8 +756,13 @@
     box-shadow: none;
   }
 
+  /*
+   * El archivo blanco se carga directamente desde Header.tsx.
+   * No se aplica filtro, así se respetan sus colores originales.
+   */
+
   .fixedHeader[data-menu-open="true"] .logo {
-    filter: brightness(0) invert(1);
+    filter: none;
   }
 
   .fixedHeader[data-menu-open="true"]

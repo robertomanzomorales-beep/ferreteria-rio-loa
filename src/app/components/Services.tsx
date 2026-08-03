@@ -83,7 +83,7 @@ export default function Services() {
     }
 
     const elements = Array.from(
-      section.querySelectorAll<HTMLElement>("[data-reveal]"),
+      section.querySelectorAll<HTMLElement>("[data-reveal]")
     );
 
     const observer = new IntersectionObserver(
@@ -102,7 +102,7 @@ export default function Services() {
       {
         threshold: 0.14,
         rootMargin: "0px 0px -8% 0px",
-      },
+      }
     );
 
     elements.forEach((element) => {
@@ -120,8 +120,15 @@ export default function Services() {
       ref={sectionRef}
       className={styles.services}
     >
-      <div className={styles.backgroundShape} aria-hidden="true" />
-      <div className={styles.backgroundLine} aria-hidden="true" />
+      <div
+        className={styles.backgroundShape}
+        aria-hidden="true"
+      />
+
+      <div
+        className={styles.backgroundLine}
+        aria-hidden="true"
+      />
 
       <div className={styles.container}>
         <header className={styles.heading}>
@@ -150,15 +157,15 @@ export default function Services() {
             style={revealDelay(180)}
           >
             <p>
-              Atendemos las necesidades de empresas, minería, construcción,
-              maestros y clientes del hogar con una respuesta cercana,
-              confiable y profesional.
+              Atendemos las necesidades de empresas, minería,
+              construcción, maestros y clientes del hogar con una
+              respuesta cercana, confiable y profesional.
             </p>
 
             <p>
               Desde una compra específica hasta la coordinación de un
-              abastecimiento, nuestro equipo le ayuda a encontrar una solución
-              clara y oportuna.
+              abastecimiento, nuestro equipo le ayuda a encontrar una
+              solución clara y oportuna.
             </p>
           </div>
         </header>
@@ -171,12 +178,16 @@ export default function Services() {
               data-reveal
               style={revealDelay(100 + (index % 4) * 90)}
             >
-              <span className={styles.number} aria-hidden="true">
+              <span
+                className={styles.number}
+                aria-hidden="true"
+              >
                 {service.number}
               </span>
 
               <div className={styles.serviceContent}>
                 <h3>{service.title}</h3>
+
                 <p>{service.description}</p>
               </div>
             </article>
@@ -192,8 +203,9 @@ export default function Services() {
             <span>¿NECESITA UN PRODUCTO ESPECÍFICO?</span>
 
             <p>
-              Cuéntenos qué necesita y nuestro equipo le ayudará a revisar
-              disponibilidad, alternativas y coordinación de entrega.
+              Cuéntenos qué necesita y nuestro equipo le ayudará a
+              revisar disponibilidad, alternativas y coordinación de
+              entrega.
             </p>
           </div>
 
@@ -203,8 +215,14 @@ export default function Services() {
             rel="noopener noreferrer"
             className={styles.button}
           >
-            Solicitar cotización
-            <span aria-hidden="true">↗</span>
+            <span className={styles.buttonLabel}>
+              Solicitar cotización
+            </span>
+
+            <span
+              className={styles.buttonArrow}
+              aria-hidden="true"
+            />
           </a>
         </div>
       </div>

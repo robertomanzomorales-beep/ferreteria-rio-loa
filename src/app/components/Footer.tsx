@@ -306,7 +306,7 @@ export default function Footer() {
             <address className={styles.address}>
               <a
                 className={styles.addressItem}
-                href="https://www.google.com/maps/search/?api=1&query=Av.+Grecia+880,+Calama,+Chile"
+                href="https://www.google.com/maps/place/Ferreter%C3%ADa+R%C3%ADo+Loa/@-22.473361,-68.9315727,264m/data=!3m1!1e3!4m6!3m5!1s0x96ac084a91eb99f5:0x5031a6ec2061703d!8m2!3d-22.4736527!4d-68.9311718!16s%2Fg%2F11dxcqw01d?entry=ttu&g_ep=EgoyMDI2MDcyOS4wIKXMDSoASAFQAw%3D%3D"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -361,7 +361,7 @@ export default function Footer() {
                 className={styles.buttonArrow}
                 aria-hidden="true"
               >
-                ↗
+                <span>↗</span>
               </span>
             </a>
           </div>
