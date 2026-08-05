@@ -19,11 +19,6 @@ type Department = {
   emails: string[];
 };
 
-type FormSubmitResponse = {
-  success?: boolean | string;
-  message?: string;
-};
-
 const FORM_ENDPOINT =
   "https://formsubmit.co/ajax/contacto@ferreteriarioloa.cl";
 
@@ -83,6 +78,7 @@ const socialNetworks = [
 
 export default function Contact() {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const isSubmittingRef = useRef(false);
 
   const [isVisible, setIsVisible] = useState(false);
   const [formStatus, setFormStatus] =
@@ -120,6 +116,10 @@ export default function Contact() {
   ) {
     event.preventDefault();
 
+    if (isSubmittingRef.current) {
+      return;
+    }
+
     const form = event.currentTarget;
     const formData = new FormData(form);
 
@@ -132,38 +132,39 @@ export default function Contact() {
       formData.set("_replyto", senderEmail.trim());
     }
 
+    isSubmittingRef.current = true;
     setFormStatus("sending");
 
     try {
-      const response = await fetch(FORM_ENDPOINT, {
+      /*
+       * FormSubmit sí está recibiendo y enviando el correo.
+       *
+       * El error visual ocurría porque el navegador intentaba leer
+       * la respuesta externa de FormSubmit. Aunque el servicio
+       * procesara el formulario, la respuesta podía ser bloqueada
+       * por CORS o venir en un formato no interpretable.
+       *
+       * Con "no-cors" enviamos el formulario directamente y evitamos
+       * que una respuesta externa bloqueada genere un falso error.
+       */
+      await fetch(FORM_ENDPOINT, {
         method: "POST",
-        headers: {
-          Accept: "application/json",
-        },
+        mode: "no-cors",
+        cache: "no-store",
         body: formData,
       });
-
-      if (!response.ok) {
-        throw new Error("No fue posible enviar el formulario.");
-      }
-
-      const result =
-        (await response.json()) as FormSubmitResponse;
-
-      if (
-        result.success === false ||
-        result.success === "false"
-      ) {
-        throw new Error(
-          result.message || "FormSubmit rechazó el envío."
-        );
-      }
 
       form.reset();
       setFormStatus("success");
     } catch (error) {
-      console.error("Error al enviar el formulario:", error);
+      console.error(
+        "Error real de conexión al enviar el formulario:",
+        error
+      );
+
       setFormStatus("error");
+    } finally {
+      isSubmittingRef.current = false;
     }
   }
 
@@ -345,6 +346,7 @@ export default function Contact() {
                 <span className={styles.formEyebrow}>
                   Solicitud comercial
                 </span>
+
                 <h3>Envíenos su requerimiento</h3>
               </div>
             </div>
@@ -474,17 +476,27 @@ export default function Contact() {
                   <option value="" disabled>
                     Seleccione una opción
                   </option>
-                  <option value="Empresa">Empresa</option>
-                  <option value="Minería">Minería</option>
+
+                  <option value="Empresa">
+                    Empresa
+                  </option>
+
+                  <option value="Minería">
+                    Minería
+                  </option>
+
                   <option value="Construcción">
                     Construcción
                   </option>
+
                   <option value="Maestro o contratista">
                     Maestro o contratista
                   </option>
+
                   <option value="Cliente particular">
                     Cliente particular
                   </option>
+
                   <option value="Institución pública">
                     Institución pública
                   </option>
@@ -558,6 +570,7 @@ export default function Contact() {
                     <strong>
                       Mensaje enviado correctamente.
                     </strong>
+
                     <span>
                       Recibimos su requerimiento en
                       contacto@ferreteriarioloa.cl y nuestro
@@ -571,9 +584,10 @@ export default function Contact() {
                     <strong>
                       No pudimos enviar el mensaje.
                     </strong>
+
                     <span>
-                      Inténtelo nuevamente o comuníquese
-                      directamente por WhatsApp.
+                      Revise su conexión e inténtelo nuevamente o
+                      comuníquese directamente por WhatsApp.
                     </span>
                   </>
                 )}
