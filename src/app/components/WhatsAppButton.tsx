@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import styles from "./WhatsAppButton.module.css";
 
 const whatsappUrl =
-  "https://wa.me/56979886283?text=Hola%2C%20quisiera%20solicitar%20informaci%C3%B3n%20o%20una%20cotizaci%C3%B3n%20de%20Ferreter%C3%ADa%20R%C3%ADo%20Loa.";
+  "https://wa.me/56975669127?text=Hola%2C%20quisiera%20solicitar%20informaci%C3%B3n%20o%20una%20cotizaci%C3%B3n%20de%20Ferreter%C3%ADa%20R%C3%ADo%20Loa.";
 
 export default function WhatsAppButton() {
   const [footerVisible, setFooterVisible] = useState(false);

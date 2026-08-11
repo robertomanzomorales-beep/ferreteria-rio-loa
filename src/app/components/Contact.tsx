@@ -265,10 +265,10 @@ export default function Contact() {
 
                 <div className={styles.channelContent}>
                   <span>Atención por WhatsApp</span>
-                  <strong>+56 9 7988 6283</strong>
+                  <strong>+56 9 7566 9127</strong>
 
                   <a
-                    href="https://wa.me/56979886283?text=Hola%2C%20quiero%20solicitar%20informaci%C3%B3n%20o%20una%20cotizaci%C3%B3n."
+                    href="https://wa.me/56975669127?text=Hola%2C%20quiero%20solicitar%20informaci%C3%B3n%20o%20una%20cotizaci%C3%B3n."
                     target="_blank"
                     rel="noreferrer"
                   >

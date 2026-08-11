@@ -293,7 +293,7 @@ export default function Header() {
 
             <a
               className={styles.quoteButton}
-              href="https://wa.me/56979886283?text=Hola%2C%20quiero%20solicitar%20informaci%C3%B3n%20o%20cotizaci%C3%B3n%20para%20productos%20de%20Ferreter%C3%ADa%20R%C3%ADo%20Loa."
+              href="https://wa.me/56975669127?text=Hola%2C%20quiero%20solicitar%20informaci%C3%B3n%20o%20cotizaci%C3%B3n%20para%20productos%20de%20Ferreter%C3%ADa%20R%C3%ADo%20Loa."
               target="_blank"
               rel="noopener noreferrer"
             >
