@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { PRIVACY_CONSENT, PRIVACY_VERSION } from "@/lib/privacy";
 import {
   type CSSProperties,
@@ -540,7 +539,7 @@ export default function Contact() {
                   <input id="contact-consent" name="consentimiento" type="checkbox" required aria-describedby="contact-privacy-note" />
                   <span>
                     {PRIVACY_CONSENT.split(" He leído")[0]}{" "}
-                    He leído la <Link href="/privacidad" target="_blank" rel="noopener noreferrer" aria-label="Política de privacidad (se abre en una nueva pestaña)">Política de privacidad</Link>, que informa el uso de FormSubmit para enviar mi solicitud al correo de la empresa.
+                    He leído la <a href="/privacidad" target="_blank" rel="noopener noreferrer" aria-label="Política de privacidad (se abre en una nueva pestaña)">Política de privacidad</a>, que informa el uso de FormSubmit para enviar mi solicitud al correo de la empresa.
                   </span>
                 </label>
                 <p id="contact-privacy-note">Puede ejercer sus derechos en <a href="mailto:contacto@ferreteriarioloa.cl">contacto@ferreteriarioloa.cl</a>. Evite incluir datos sensibles o información de terceros innecesaria. Esta autorización no incluye publicidad.</p>

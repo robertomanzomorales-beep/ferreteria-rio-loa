@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { PRIVACY_DOCUMENTS } from "@/lib/privacy";
 import {
   useEffect,
@@ -379,7 +378,7 @@ export default function Footer() {
             <div><h3>Privacidad y transparencia</h3><p>Información sobre sus datos y los canales para ejercer sus derechos.</p></div>
           </div>
           <nav aria-label="Documentos de privacidad" className={styles.privacyLinks}>
-            {PRIVACY_DOCUMENTS.map((document) => <Link key={document.href} href={document.href} prefetch={false}>{document.label}</Link>)}
+            {PRIVACY_DOCUMENTS.map((document) => <a key={document.href} href={document.href}>{document.label}</a>)}
           </nav>
         </div>
       </section>

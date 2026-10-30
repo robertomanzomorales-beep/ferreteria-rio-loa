@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import type { ReactNode } from "react";
 import { BUSINESS, PRIVACY_DOCUMENTS, PRIVACY_UPDATED, RIGHTS_EMAIL } from "@/lib/privacy";
 import styles from "./PrivacyPage.module.css";
@@ -17,10 +16,10 @@ export default function PrivacyPage({ title, intro, current, children }: Privacy
       <a href="#contenido" className={styles.skip}>Saltar al contenido</a>
       <header className={styles.header}>
         <div className={styles.headerInner}>
-          <Link href="/" aria-label="Ferretería Río Loa, volver al inicio">
+          <a href="/" aria-label="Ferretería Río Loa, volver al inicio">
             <Image src="/logo-rio-loa-menu.webp" alt="Ferretería Río Loa" width={208} height={93} sizes="(max-width: 600px) 158px, 208px" className={styles.logo} />
-          </Link>
-          <Link href="/" className={styles.back}>Volver al sitio</Link>
+          </a>
+          <a href="/" className={styles.back}>Volver al sitio</a>
         </div>
       </header>
 
@@ -39,9 +38,9 @@ export default function PrivacyPage({ title, intro, current, children }: Privacy
             <nav aria-label="Documentos de privacidad" className={styles.navigation}>
               <p>Información para usted</p>
               {PRIVACY_DOCUMENTS.map((document) => (
-                <Link key={document.href} href={document.href} aria-current={current === document.href ? "page" : undefined}>
+                <a key={document.href} href={document.href} aria-current={current === document.href ? "page" : undefined}>
                   {document.label}
-                </Link>
+                </a>
               ))}
             </nav>
             <div className={styles.help}>
@@ -68,7 +67,7 @@ export default function PrivacyPage({ title, intro, current, children }: Privacy
       <footer className={styles.footer}>
         <div><strong>Ferretería Río Loa</strong><span>{BUSINESS.address}</span></div>
         <nav aria-label="Enlaces del pie de página legal">
-          <Link href="/">Inicio</Link><Link href="/#contacto">Contacto y cotizaciones</Link>
+          <a href="/">Inicio</a><a href="/#contacto">Contacto y cotizaciones</a>
         </nav>
         <p>© 2026 Ferretería Río Loa.</p>
       </footer>
