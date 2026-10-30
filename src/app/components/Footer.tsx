@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import { PRIVACY_DOCUMENTS } from "@/lib/privacy";
 import {
   useEffect,
   useRef,
@@ -369,6 +371,18 @@ export default function Footer() {
           </div>
         </div>
       </div>
+
+      <section className={styles.privacyBar} aria-label="Privacidad y protección de datos">
+        <div className={styles.privacyInner}>
+          <div className={styles.privacyHeading}>
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M12 3 4 6v5c0 5 8 10 8 10s8-5 8-10V6l-8-3Z" /><path d="m8.5 11.5 2.5 2.5 4.5-5" /></svg>
+            <div><h3>Privacidad y transparencia</h3><p>Información sobre sus datos y los canales para ejercer sus derechos.</p></div>
+          </div>
+          <nav aria-label="Documentos de privacidad" className={styles.privacyLinks}>
+            {PRIVACY_DOCUMENTS.map((document) => <Link key={document.href} href={document.href} prefetch={false}>{document.label}</Link>)}
+          </nav>
+        </div>
+      </section>
 
       <div className={styles.bottomBar}>
         <div className={styles.bottomContent}>

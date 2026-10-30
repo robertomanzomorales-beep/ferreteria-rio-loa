@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import { PRIVACY_CONSENT, PRIVACY_VERSION } from "@/lib/privacy";
 import {
   type CSSProperties,
   type FormEvent,
@@ -19,8 +21,7 @@ type Department = {
   emails: string[];
 };
 
-const FORM_ENDPOINT =
-  "https://formsubmit.co/ajax/contacto@ferreteriarioloa.cl";
+const FORM_ENDPOINT = "/api/contacto";
 
 const departments: Department[] = [
   {
@@ -83,6 +84,7 @@ export default function Contact() {
   const [isVisible, setIsVisible] = useState(false);
   const [formStatus, setFormStatus] =
     useState<FormStatus>("idle");
+  const [formError, setFormError] = useState("");
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -122,37 +124,26 @@ export default function Contact() {
 
     const form = event.currentTarget;
     const formData = new FormData(form);
-
-    const senderEmail = formData.get("Correo electrónico");
-
-    if (
-      typeof senderEmail === "string" &&
-      senderEmail.trim().length > 0
-    ) {
-      formData.set("_replyto", senderEmail.trim());
-    }
+    if (!form.reportValidity() || formData.get("consentimiento") !== "on" || formData.get("_honey")) return;
 
     isSubmittingRef.current = true;
+    setFormError("");
     setFormStatus("sending");
 
     try {
-      /*
-       * FormSubmit sí está recibiendo y enviando el correo.
-       *
-       * El error visual ocurría porque el navegador intentaba leer
-       * la respuesta externa de FormSubmit. Aunque el servicio
-       * procesara el formulario, la respuesta podía ser bloqueada
-       * por CORS o venir en un formato no interpretable.
-       *
-       * Con "no-cors" enviamos el formulario directamente y evitamos
-       * que una respuesta externa bloqueada genere un falso error.
-       */
-      await fetch(FORM_ENDPOINT, {
+      const response = await fetch(FORM_ENDPOINT, {
         method: "POST",
-        mode: "no-cors",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
         cache: "no-store",
-        body: formData,
+        body: JSON.stringify(Object.fromEntries(formData)),
+        signal: AbortSignal.timeout(25000),
       });
+      if (response.status === 409) {
+        setFormError("La información de privacidad se actualizó. Recargue la página y revise la política antes de enviar.");
+        throw new Error("Se requiere revisar la política actualizada");
+      }
+      const result: { success?: boolean } = await response.json();
+      if (!response.ok || result.success !== true) throw new Error("No se confirmó el envío de la solicitud");
 
       form.reset();
       setFormStatus("success");
@@ -362,6 +353,8 @@ export default function Contact() {
               onSubmit={handleSubmit}
               aria-busy={formStatus === "sending"}
             >
+              <p className={styles.requiredNote}>Los campos marcados con * son obligatorios. Empresa y cargo son opcionales.</p>
+              <input type="hidden" name="version_politica_privacidad" value={PRIVACY_VERSION} />
               <input
                 type="hidden"
                 name="_subject"
@@ -391,7 +384,7 @@ export default function Contact() {
 
               <div className={styles.field}>
                 <label htmlFor="contact-name">
-                  Nombre y apellido
+                  Nombre y apellido *
                 </label>
 
                 <input
@@ -400,6 +393,7 @@ export default function Contact() {
                   type="text"
                   autoComplete="name"
                   placeholder="Ingrese su nombre"
+                  maxLength={120}
                   required
                 />
               </div>
@@ -415,6 +409,7 @@ export default function Contact() {
                   type="text"
                   autoComplete="organization"
                   placeholder="Nombre de la empresa"
+                  maxLength={180}
                 />
               </div>
 
@@ -429,12 +424,13 @@ export default function Contact() {
                   type="text"
                   autoComplete="organization-title"
                   placeholder="Cargo o área"
+                  maxLength={120}
                 />
               </div>
 
               <div className={styles.field}>
                 <label htmlFor="contact-email">
-                  Correo electrónico
+                  Correo electrónico *
                 </label>
 
                 <input
@@ -443,13 +439,14 @@ export default function Contact() {
                   type="email"
                   autoComplete="email"
                   placeholder="correo@empresa.cl"
+                  maxLength={254}
                   required
                 />
               </div>
 
               <div className={styles.field}>
                 <label htmlFor="contact-phone">
-                  Teléfono / WhatsApp
+                  Teléfono / WhatsApp *
                 </label>
 
                 <input
@@ -458,13 +455,14 @@ export default function Contact() {
                   type="tel"
                   autoComplete="tel"
                   placeholder="+56 9 1234 5678"
+                  maxLength={50}
                   required
                 />
               </div>
 
               <div className={styles.field}>
                 <label htmlFor="contact-type">
-                  Tipo de cliente
+                  Tipo de cliente *
                 </label>
 
                 <select
@@ -507,7 +505,7 @@ export default function Contact() {
                 className={`${styles.field} ${styles.fullField}`}
               >
                 <label htmlFor="contact-product">
-                  Producto o servicio requerido
+                  Producto o servicio requerido *
                 </label>
 
                 <input
@@ -515,6 +513,7 @@ export default function Contact() {
                   name="Producto o servicio requerido"
                   type="text"
                   placeholder="Indique brevemente lo que necesita"
+                  maxLength={240}
                   required
                 />
               </div>
@@ -523,7 +522,7 @@ export default function Contact() {
                 className={`${styles.field} ${styles.fullField}`}
               >
                 <label htmlFor="contact-message">
-                  Mensaje / requerimiento
+                  Mensaje / requerimiento *
                 </label>
 
                 <textarea
@@ -531,8 +530,20 @@ export default function Contact() {
                   name="Mensaje / requerimiento"
                   rows={5}
                   placeholder="Cuéntenos los detalles de su solicitud"
+                  maxLength={4000}
                   required
                 />
+              </div>
+
+              <div className={styles.consentBox}>
+                <label htmlFor="contact-consent">
+                  <input id="contact-consent" name="consentimiento" type="checkbox" required aria-describedby="contact-privacy-note" />
+                  <span>
+                    {PRIVACY_CONSENT.split(" He leído")[0]}{" "}
+                    He leído la <Link href="/privacidad" target="_blank" rel="noopener noreferrer" aria-label="Política de privacidad (se abre en una nueva pestaña)">Política de privacidad</Link>, que informa el uso de FormSubmit para enviar mi solicitud al correo de la empresa.
+                  </span>
+                </label>
+                <p id="contact-privacy-note">Puede ejercer sus derechos en <a href="mailto:contacto@ferreteriarioloa.cl">contacto@ferreteriarioloa.cl</a>. Evite incluir datos sensibles o información de terceros innecesaria. Esta autorización no incluye publicidad.</p>
               </div>
 
               <div className={styles.submitArea}>
@@ -572,9 +583,8 @@ export default function Contact() {
                     </strong>
 
                     <span>
-                      Recibimos su requerimiento en
-                      contacto@ferreteriarioloa.cl y nuestro
-                      equipo responderá a la brevedad.
+                      Su solicitud fue enviada a nuestro equipo a través de
+                      contacto@ferreteriarioloa.cl. Le responderemos a la brevedad.
                     </span>
                   </>
                 )}
@@ -586,8 +596,7 @@ export default function Contact() {
                     </strong>
 
                     <span>
-                      Revise su conexión e inténtelo nuevamente o
-                      comuníquese directamente por WhatsApp.
+                      {formError || "Revise su conexión e inténtelo nuevamente o comuníquese directamente por WhatsApp."}
                     </span>
                   </>
                 )}
