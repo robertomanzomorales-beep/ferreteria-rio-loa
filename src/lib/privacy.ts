@@ -1,14 +1,16 @@
-export const PRIVACY_VERSION = "2026-10-30";
-export const PRIVACY_UPDATED = "30 de octubre de 2026";
+export const PRIVACY_VERSION = "2026-11-02";
+export const PRIVACY_UPDATED = "2 de noviembre de 2026";
 export const BUSINESS = {
   name: "Ferretería Río Loa",
+  legalName: "Javier Rojas Vega",
+  legalRepresentative: "Javier Rojas Vega",
   email: "contacto@ferreteriarioloa.cl",
   address: "Av. Grecia 880, Calama, Chile",
   origin: "https://www.ferreteriarioloa.cl",
 };
 
 export const PRIVACY_CONSENT =
-  "Autorizo a Ferretería Río Loa a tratar los datos que proporciono para responder esta solicitud y gestionar su cotización. He leído la Política de privacidad, que informa el uso de FormSubmit para enviar mi solicitud al correo de la empresa.";
+  `Autorizo a ${BUSINESS.legalName}, quien opera bajo el nombre comercial ${BUSINESS.name}, a tratar los datos que proporciono para responder esta solicitud y gestionar su cotización. He leído la Política de privacidad, que informa el uso de FormSubmit para enviar mi solicitud al correo de la empresa.`;
 
 export const PRIVACY_DOCUMENTS = [
   { href: "/privacidad", label: "Política de privacidad" },
